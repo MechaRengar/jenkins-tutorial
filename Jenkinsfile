@@ -2,24 +2,32 @@ pipeline {
     agent any
 
     stages {
-        stage("install") {
+        stage('Pull Code') {
             steps {
+                // Pull the latest code from the repository
+                git 'https://oauth2@github.com/MechaRengar/node-express-boilerplate.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                // Install npm dependencies
                 sh 'npm install'
             }
         }
-        stage("build") {
+
+        stage('Build') {
             steps {
+                // Run the build script
                 sh 'npm run build'
             }
         }
-    } 
-    
+    }
+
     post {
-        success {
-            echo "SUCCESSFUL"
-        }
-        failure {
-            echo "FAILED"
+        always {
+            // Clean up workspace after build
+            cleanWs()
         }
     }
 }
