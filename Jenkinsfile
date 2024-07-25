@@ -16,18 +16,11 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Test') {
             steps {
-                // Run the build script
-                sh 'npm run build'
+                // Run the test script
+                sh 'npm run test'
             }
-        }
-    }
-
-    post {
-        always {
-            // Clean up workspace after build
-            cleanWs()
         }
     }
 }
